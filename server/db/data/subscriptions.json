@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1785459897151,
+    "userEmail": "classic@gmail.com",
+    "plan": "starter",
+    "amountGhs": 99,
+    "paystackRef": "AGRO_STARTER_1785459885872_2943",
+    "status": "active",
+    "paidAt": "2026-07-31T01:04:57.151Z",
+    "expiresAt": "2026-08-30T01:04:57.151Z",
+    "createdAt": "2026-07-31T01:04:57.151Z"
+  },
+  {
+    "id": 1785460916781,
+    "userEmail": "tester1@gmail.com",
+    "plan": "starter",
+    "amountGhs": 99,
+    "paystackRef": "AGRO_STARTER_1785460908418_7596",
+    "status": "active",
+    "paidAt": "2026-07-31T01:21:56.781Z",
+    "expiresAt": "2026-08-30T01:21:56.781Z",
+    "createdAt": "2026-07-31T01:21:56.781Z"
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "dev-admin-001",
+    "name": "AgroLink Admin",
+    "email": "classicgenius@dev",
+    "password": "$2a$10$81ZQtqVg3aqkhM5m/f60nOkvrf/aBooH6TefCRYR/Lfao5Ijl.2p2",
+    "role": "admin",
+    "avatar": "https://ui-avatars.com/api/?name=Dev+Admin&background=1a472a&color=fff",
+    "joined": "Jan 2026",
+    "bio": "AgroLink Platform Administrator",
+    "createdAt": "2026-07-31T00:32:18.931Z"
+  },
+  {
+    "id": "farmer-001",
+    "name": "James Asante",
+    "email": "james.asante@agrolink.gh",
+    "password": "$2a$10$TNdnvmNpFyAAIjdWMzMzCu3/P1KikE0Q5BaeRpg3WH9Dix4v4.d9S",
+    "role": "farmer",
+    "avatar": "https://ui-avatars.com/api/?name=James+Asante&background=3B823E&color=fff",
+    "joined": "Jan 2026",
+    "bio": "Cocoa and maize farmer from Ashanti Region.",
+    "phone": "+233 24 123 4567",
+    "createdAt": "2026-07-31T00:32:18.931Z"
+  },
+  {
+    "id": "buyer-001",
+    "name": "Accra Fresh Market",
+    "email": "accra.fresh@market.gh",
+    "password": "$2a$10$yBScSipacvkn3fNxFxV5AucgbxdRLCuEGpWR16DUhlPewlMw2sTP2",
+    "role": "buyer",
+    "avatar": "https://ui-avatars.com/api/?name=Accra+Fresh&background=F4C430&color=1C3322",
+    "joined": "Feb 2026",
+    "bio": "Wholesale buyer for Accra Fresh Market.",
+    "createdAt": "2026-07-31T00:32:18.931Z"
+  },
+  {
+    "id": "buyer-002",
+    "name": "Retail Buyers Co.",
+    "email": "retail@buyers.gh",
+    "password": "$2a$10$yBScSipacvkn3fNxFxV5AucgbxdRLCuEGpWR16DUhlPewlMw2sTP2",
+    "role": "buyer",
+    "avatar": "https://ui-avatars.com/api/?name=Retail+Buyers&background=F4C430&color=1C3322",
+    "joined": "Feb 2026",
+    "bio": "Retail distribution company.",
+    "createdAt": "2026-07-31T00:32:18.931Z"
+  },
+  {
+    "id": "user-1785458163646",
+    "name": "tester2",
+    "email": "tester2@gmail.com",
+    "password": "$2a$10$pX6NDEOQ4lLZQXbAXIDDgeuj3jfQ3VMESXPmrmvOyzHcHCZNTjVk6",
+    "role": "farmer",
+    "avatar": "https://ui-avatars.com/api/?name=tester2&background=random",
+    "joined": "Jul 2026",
+    "bio": "",
+    "createdAt": "2026-07-31T00:36:03.670Z"
+  },
+  {
+    "id": "user-1785458465285",
+    "name": "tester1",
+    "email": "tester1@gmail.com",
+    "password": "$2a$10$2oaDwlOZBKu/S6639NthwOmq9hncYHHNfWFTOf8ecXUoF7M.ZIDYG",
+    "role": "farmer",
+    "avatar": "https://ui-avatars.com/api/?name=tester1&background=random",
+    "joined": "Jul 2026",
+    "bio": "",
+    "createdAt": "2026-07-31T00:41:05.285Z",
+    "plan": "starter",
+    "planExpiresAt": "2026-08-30T01:21:56.781Z",
+    "updatedAt": "2026-08-04T00:58:18.601Z"
+  },
+  {
+    "id": "user-1785459621973",
+    "name": "classic",
+    "email": "classic@gmail.com",
+    "password": "$2a$10$Tntf3X7bI4mcPpVu77NtiuExHHsG.gfcS1vzA7imE7LkQyNLBRk1K",
+    "role": "farmer",
+    "avatar": "https://ui-avatars.com/api/?name=classic&background=random",
+    "joined": "Jul 2026",
+    "bio": "",
+    "createdAt": "2026-07-31T01:00:21.973Z",
+    "plan": "starter",
+    "planExpiresAt": "2026-08-30T01:04:57.151Z",
+    "updatedAt": "2026-08-04T01:20:53.317Z",
+    "promotions": [
+      {
+        "title": "FOR THE LOVE FOR MY CUSTOMERS",
+        "type": "percent",
+        "value": "2",
+        "code": "",
+        "productId": "1785806229709",
+        "active": true,
+        "id": 1785806453302,
+        "productName": "Grapes",
+        "farmName": "classic"
+      }
+    ]
+  },
+  {
+    "id": "user-1785459997588",
+    "name": "tester3",
+    "email": "tester3@gmail.com",
+    "password": "$2a$10$M7yVztnAuRs.lTFQ0M6FOuBu9DYyKbW9dmdA9WZrKMjpmdDwj5IQK",
+    "role": "farmer",
+    "avatar": "https://ui-avatars.com/api/?name=tester3&background=random",
+    "joined": "Jul 2026",
+    "bio": "",
+    "createdAt": "2026-07-31T01:06:37.610Z"
+  }
+]

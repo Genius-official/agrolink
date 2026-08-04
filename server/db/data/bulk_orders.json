@@ -1,0 +1,30 @@
+[
+  {
+    "id": "BLK-2001",
+    "buyerName": "Accra Fresh Market",
+    "buyerEmail": "accra.fresh@market.gh",
+    "productName": "Fresh Tomatoes",
+    "qty": 200,
+    "unit": "kg",
+    "targetPrice": 12,
+    "status": "pending",
+    "comments": "Weekly bulk request for wholesale distribution.",
+    "ownerEmail": "james.asante@agrolink.gh",
+    "date": "2026-07-20",
+    "createdAt": "2026-07-31T00:32:18.296Z"
+  },
+  {
+    "id": "BLK-2002",
+    "buyerName": "Retail Buyers Co.",
+    "buyerEmail": "retail@buyers.gh",
+    "productName": "Premium Maize",
+    "qty": 1000,
+    "unit": "kg",
+    "targetPrice": 9.5,
+    "status": "accepted",
+    "comments": "Requesting bulk maize supply.",
+    "ownerEmail": "james.asante@agrolink.gh",
+    "date": "2026-07-19",
+    "createdAt": "2026-07-31T00:32:18.296Z"
+  }
+]

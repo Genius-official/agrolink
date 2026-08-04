@@ -1,0 +1,95 @@
+[
+  {
+    "id": "msg-1785458337309-jj0tb60kncq",
+    "senderEmail": "tester2@gmail.com",
+    "senderName": "tester2",
+    "senderAvatar": "https://ui-avatars.com/api/?name=tester2&background=random",
+    "recipientEmail": "tester2@gmail.com",
+    "text": "hey there",
+    "time": "12:38 AM",
+    "timestamp": 1785458337309,
+    "createdAt": "2026-07-31T00:38:57.309Z"
+  },
+  {
+    "id": "msg-1785459532605-v6d9r2fyuo",
+    "senderEmail": "tester1@gmail.com",
+    "senderName": "tester1",
+    "senderAvatar": "https://ui-avatars.com/api/?name=tester1&background=random",
+    "recipientEmail": "tester1@gmail.com",
+    "text": "hey farmer",
+    "time": "12:58 AM",
+    "timestamp": 1785459532605,
+    "createdAt": "2026-07-31T00:58:52.659Z",
+    "updatedAt": "2026-08-04T00:58:18.635Z"
+  },
+  {
+    "id": "msg-1785460623912-g3c86k2yfpo",
+    "senderEmail": "tester3@gmail.com",
+    "senderName": "tester3",
+    "senderAvatar": "https://ui-avatars.com/api/?name=tester3&background=random",
+    "recipientEmail": "tester1@gmail.com",
+    "text": "yo chale, whatsup?",
+    "time": "01:17 AM",
+    "timestamp": 1785460623912,
+    "createdAt": "2026-07-31T01:17:03.912Z"
+  },
+  {
+    "id": "msg-1785461513453-hg2woxazagw",
+    "senderEmail": "tester1@gmail.com",
+    "senderName": "tester1",
+    "senderAvatar": "https://ui-avatars.com/api/?name=tester1&background=random",
+    "recipientEmail": "tester1@gmail.com",
+    "text": "hey chat",
+    "time": "01:31 AM",
+    "timestamp": 1785461513453,
+    "createdAt": "2026-07-31T01:31:53.479Z",
+    "updatedAt": "2026-08-04T00:58:18.635Z"
+  },
+  {
+    "id": "msg-1785462088717-1u57xbau3gj",
+    "senderEmail": "tester2@gmail.com",
+    "senderName": "tester2",
+    "senderAvatar": "https://ui-avatars.com/api/?name=tester2&background=random",
+    "recipientEmail": "tester1@gmail.com",
+    "text": "hey user is it fresh?",
+    "time": "01:41 AM",
+    "timestamp": 1785462088717,
+    "createdAt": "2026-07-31T01:41:28.717Z"
+  },
+  {
+    "id": "msg-1785463420472-fyba2mhghv",
+    "senderEmail": "classic@gmail.com",
+    "senderName": "classic",
+    "senderAvatar": "https://ui-avatars.com/api/?name=classic&background=random",
+    "recipientEmail": "tester1@gmail.com",
+    "text": "hey there, is it fresh?",
+    "time": "02:03 AM",
+    "timestamp": 1785463420472,
+    "createdAt": "2026-07-31T02:03:40.499Z",
+    "updatedAt": "2026-08-04T01:20:53.359Z"
+  },
+  {
+    "id": "msg-1785463503308-1mkjrtqlrz4",
+    "senderEmail": "tester1@gmail.com",
+    "senderName": "tester1",
+    "senderAvatar": "https://ui-avatars.com/api/?name=tester1&background=random",
+    "recipientEmail": "classic@gmail.com",
+    "text": "good day, yes please its fresh",
+    "time": "02:05 AM",
+    "timestamp": 1785463503308,
+    "createdAt": "2026-07-31T02:05:03.309Z",
+    "updatedAt": "2026-08-04T00:58:18.635Z"
+  },
+  {
+    "id": "msg-1785800894927-rnoh0fxxcf",
+    "senderEmail": "classic@gmail.com",
+    "senderName": "classic",
+    "senderAvatar": "https://ui-avatars.com/api/?name=classic&background=random",
+    "recipientEmail": "tester1@gmail.com",
+    "text": "for sure",
+    "time": "11:48 PM",
+    "timestamp": 1785800894927,
+    "createdAt": "2026-08-03T23:48:14.984Z",
+    "updatedAt": "2026-08-04T01:20:53.359Z"
+  }
+]

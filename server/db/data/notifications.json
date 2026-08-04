@@ -1,0 +1,193 @@
+[
+  {
+    "id": "notif-1785458337309-i3iwu291367",
+    "recipientEmail": "tester2@gmail.com",
+    "title": "New Message",
+    "message": "tester2 sent you a message: \"hey there\"",
+    "time": "Just now",
+    "read": false,
+    "type": "message",
+    "chatTarget": {
+      "name": "tester2",
+      "email": "tester2@gmail.com"
+    },
+    "createdAt": "2026-07-31T00:38:57.331Z"
+  },
+  {
+    "id": "notif-1785459532605-g6x10zwsy9m",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Message",
+    "message": "tester1 sent you a message: \"hey farmer\"",
+    "time": "Just now",
+    "read": false,
+    "type": "message",
+    "chatTarget": {
+      "name": "tester1",
+      "email": "tester1@gmail.com"
+    },
+    "createdAt": "2026-07-31T00:58:52.692Z"
+  },
+  {
+    "id": "notif-1785460623912-t31d96t0zvc",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Message",
+    "message": "tester3 sent you a message: \"yo chale, whatsup?\"",
+    "time": "Just now",
+    "read": false,
+    "type": "message",
+    "chatTarget": {
+      "name": "tester3",
+      "email": "tester3@gmail.com"
+    },
+    "createdAt": "2026-07-31T01:17:03.936Z"
+  },
+  {
+    "id": "notif-1785461107225-a0bsvavoysk",
+    "recipientEmail": "tester3@gmail.com",
+    "title": "New Order Received",
+    "message": "Order for 1x Coco Yam from AgroLink Admin.",
+    "time": "Just now",
+    "read": false,
+    "type": "order",
+    "orderId": "ORD-4334",
+    "createdAt": "2026-07-31T01:25:07.225Z"
+  },
+  {
+    "id": "notif-1785461170643-hzk11jvorxu",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Order Received",
+    "message": "Order for 1x Grapes from AgroLink Admin.",
+    "time": "Just now",
+    "read": false,
+    "type": "order",
+    "orderId": "ORD-3741",
+    "createdAt": "2026-07-31T01:26:10.643Z"
+  },
+  {
+    "id": "notif-1785461513453-9h3dyh9z81",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Message",
+    "message": "tester1 sent you a message: \"hey chat\"",
+    "time": "Just now",
+    "read": false,
+    "type": "message",
+    "chatTarget": {
+      "name": "tester1",
+      "email": "tester1@gmail.com"
+    },
+    "createdAt": "2026-07-31T01:31:53.504Z"
+  },
+  {
+    "id": "notif-1785462088717-0sj5rk7w51rn",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Message",
+    "message": "tester2 sent you a message: \"hey user is it fresh?\"",
+    "time": "Just now",
+    "read": false,
+    "type": "message",
+    "chatTarget": {
+      "name": "tester2",
+      "email": "tester2@gmail.com"
+    },
+    "createdAt": "2026-07-31T01:41:28.732Z"
+  },
+  {
+    "id": "notif-1785462106137-qi6ogpd35a9",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Order Received",
+    "message": "Order for 1x Tiger Nut from tester2.",
+    "time": "Just now",
+    "read": false,
+    "type": "order",
+    "orderId": "ORD-3139",
+    "createdAt": "2026-07-31T01:41:46.137Z"
+  },
+  {
+    "id": "notif-1785463420472-mr42za2svdg",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Message",
+    "message": "classic sent you a message: \"hey there, is it fresh?\"",
+    "time": "Just now",
+    "read": false,
+    "type": "message",
+    "chatTarget": {
+      "name": "classic",
+      "email": "classic@gmail.com"
+    },
+    "createdAt": "2026-07-31T02:03:40.531Z"
+  },
+  {
+    "id": "notif-1785463427397-40y8rauav4w",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Order Received",
+    "message": "Order for 1x Tiger Nut from classic.",
+    "time": "Just now",
+    "read": false,
+    "type": "order",
+    "orderId": "ORD-8606",
+    "createdAt": "2026-07-31T02:03:47.397Z"
+  },
+  {
+    "id": "notif-1785463477764-gusqiidh05a",
+    "recipientEmail": "classic@gmail.com",
+    "title": "Order Status Updated",
+    "message": "Your order for Tiger Nut is now delivered.",
+    "time": "Just now",
+    "read": true,
+    "type": "status",
+    "orderId": "ORD-8606",
+    "createdAt": "2026-07-31T02:04:37.764Z",
+    "updatedAt": "2026-08-04T00:31:06.477Z"
+  },
+  {
+    "id": "notif-1785463479582-237et5q2few",
+    "recipientEmail": "tester2@gmail.com",
+    "title": "Order Status Updated",
+    "message": "Your order for Tiger Nut is now delivered.",
+    "time": "Just now",
+    "read": false,
+    "type": "status",
+    "orderId": "ORD-3139",
+    "createdAt": "2026-07-31T02:04:39.582Z"
+  },
+  {
+    "id": "notif-1785463482385-t8esa4u0p7c",
+    "recipientEmail": "classicgenius@dev",
+    "title": "Order Status Updated",
+    "message": "Your order for Grapes is now delivered.",
+    "time": "Just now",
+    "read": false,
+    "type": "status",
+    "orderId": "ORD-3741",
+    "createdAt": "2026-07-31T02:04:42.385Z"
+  },
+  {
+    "id": "notif-1785463503308-e6wbioyapff",
+    "recipientEmail": "classic@gmail.com",
+    "title": "New Message",
+    "message": "tester1 sent you a message: \"good day, yes please its fresh\"",
+    "time": "Just now",
+    "read": true,
+    "type": "message",
+    "chatTarget": {
+      "name": "tester1",
+      "email": "tester1@gmail.com"
+    },
+    "createdAt": "2026-07-31T02:05:03.337Z",
+    "updatedAt": "2026-08-04T00:31:06.478Z"
+  },
+  {
+    "id": "notif-1785800894927-i4lihxsizb9",
+    "recipientEmail": "tester1@gmail.com",
+    "title": "New Message",
+    "message": "classic sent you a message: \"for sure\"",
+    "time": "Just now",
+    "read": false,
+    "type": "message",
+    "chatTarget": {
+      "name": "classic",
+      "email": "classic@gmail.com"
+    },
+    "createdAt": "2026-08-03T23:48:15.008Z"
+  }
+]

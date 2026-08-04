@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary-green: #3B823E;
+  --dark-green: #1F4F24;
+  --light-green: #E8F3EB;
+  --accent-yellow: #F4C430;
+
+  --bg: #F4F8F4;
+  --surface-white: #FFFFFF;
+  --text-main: #1C3322;
+  --text-muted: #577861;
+
+  --border-light: #CFE0D3;
+  --shadow-sm: 0 2px 8px rgba(59, 130, 62, 0.08);
+  --shadow-md: 0 6px 20px rgba(59, 130, 62, 0.12);
+  --shadow-float: 0 12px 32px rgba(59, 130, 62, 0.22);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Layout dimensions */
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 72px;
+  --bottom-nav-height: 72px;
+  --topbar-height: 64px;
+
+  /* Safe Area Support */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Robust fallback for devices that don't report safe areas correctly */
+  --header-safe-padding: max(var(--safe-top), 20px);
+
+  /* Shared transitions */
+  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+  /* Breakpoints */
+  --bp-mobile: 480px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+  --bp-large: 1440px;
+}
+
+body.dark-mode {
+  --bg: #0D160E;
+  --surface-white: #172419;
+  --text-main: #E2E8E4;
+  --text-muted: #8AA492;
+  --border-light: #2A3F30;
+  --light-green: #1C3322;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --shadow-float: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  height: -webkit-fill-available;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-main);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  transition: var(--theme-transition);
+}
+
+/* Scrollable content areas */
+.scroll-y {
+  overflow-y: auto;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-y::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scroll-y::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-y::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 4px;
+}
+
+.scroll-y::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-green);
+}
+
+/* Shared button resets */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Reusable inputs */
+.input-field {
+  width: 100%;
+  padding: 13px 18px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-light);
+  background: #FAFCFA;
+  font-family: inherit;
+  font-size: 15px;
+  color: #000000;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-field:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(59, 130, 62, 0.1);
+}
+
+.input-field::placeholder {
+  color: #A8BEB0;
+}
+
+.input-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dark-green);
+  margin-bottom: 6px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: var(--radius-full);
+  background: var(--primary-green);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--dark-green);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
