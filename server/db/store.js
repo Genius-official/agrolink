@@ -249,15 +249,29 @@ export function collection(name) {
       return count;
     },
 
-    /** Seed collection only if it is currently empty. Returns true if seeded. */
+    /** Seed collection or merge missing baseline seed records if not present. */
     async seed(records) {
-      if (readFile(name).length > 0) return false;
-      await enqueueWrite(name, records);
-      for (const rec of records) {
-        insertMySQL(name, rec);
+      const existing = readFile(name);
+      if (existing.length === 0) {
+        await enqueueWrite(name, records);
+        for (const rec of records) {
+          insertMySQL(name, rec);
+        }
+        console.log(`  ✓ Seeded ${records.length} records into [${name}]`);
+        return true;
       }
-      console.log(`  ✓ Seeded ${records.length} records into [${name}]`);
-      return true;
+      const existingKeys = new Set(existing.map(r => r.email || r.id));
+      const missing = records.filter(r => !existingKeys.has(r.email || r.id));
+      if (missing.length > 0) {
+        const merged = [...existing, ...missing];
+        await enqueueWrite(name, merged);
+        for (const rec of missing) {
+          insertMySQL(name, rec);
+        }
+        console.log(`  ✓ Merged ${missing.length} missing seed records into [${name}]`);
+        return true;
+      }
+      return false;
     },
 
     /** Completely overwrite collection contents. */

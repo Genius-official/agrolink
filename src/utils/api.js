@@ -94,3 +94,21 @@ export async function apiFetchMe() {
 export function apiLogout() {
   tokenStorage.clear();
 }
+
+/** Request Reset Code: POST /api/auth/request-reset-code. */
+export async function apiRequestResetCode(email) {
+  const res = await api.post('/auth/request-reset-code', { email });
+  return res.data || res;
+}
+
+/** Verify Reset Code: POST /api/auth/verify-reset-code. */
+export async function apiVerifyResetCode(email, code) {
+  const res = await api.post('/auth/verify-reset-code', { email, code });
+  return res.data || res;
+}
+
+/** Reset Password: POST /api/auth/reset-password with verified code. */
+export async function apiResetPassword(email, code, newPassword) {
+  const res = await api.post('/auth/reset-password', { email, code, newPassword });
+  return res.data || res;
+}

@@ -1,6 +1,8 @@
 import express from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
 import { config } from './config.js';
 import { initializeSockets } from './sockets/index.js';
 import { runSeed } from './db/seed.js';
@@ -61,6 +63,16 @@ app.use('/api/messages',      messageRoutes(io));
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/cart',          cartRoutes);
 
+// Serve static frontend build if present (Unified Single Service Deployment)
+const distPath = path.join(process.cwd(), 'dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) return next();
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
 // 404 for unknown API routes
 app.use('/api/*', (req, res) => {
   res.status(404).json({ error: `Route ${req.method} ${req.path} not found.` });
@@ -70,7 +82,7 @@ app.use('/api/*', (req, res) => {
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, _req, res, _next) => {
-  console.error('Unhandled error:', err);
+  console.error('Unhandled server error handler:', err?.message || err);
   res.status(500).json({ error: err.message || 'Internal server error.' });
 });
 

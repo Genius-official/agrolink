@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { db } from '../db/store.js';
 import { config } from '../config.js';
 import { requireAuth } from '../middleware/auth.js';
+import { sendPasswordResetEmail, sendWelcomeEmail } from '../utils/email.js';
 
 const router = Router();
 
@@ -62,6 +63,11 @@ router.post('/register', async (req, res) => {
 
     await db.users.insert(newUser);
 
+    // Send welcome email (fire-and-forget — won't block registration response)
+    sendWelcomeEmail(normalizedEmail, name.trim(), safeRole).catch(err =>
+      console.warn('Welcome email failed (non-critical):', err.message)
+    );
+
     const token = signToken(newUser);
     return res.status(201).json({
       message: 'Account created successfully.',
@@ -109,6 +115,126 @@ router.get('/me', requireAuth, (req, res) => {
   const user = db.users.byId(req.user.id);
   if (!user) return res.status(404).json({ error: 'User not found.' });
   res.json({ data: sanitizeUser(user) });
+});
+
+// In-memory store for 6-digit password reset verification codes
+const resetCodes = new Map();
+
+// ─── POST /api/auth/request-reset-code ────────────────────────────────────────
+
+router.post('/request-reset-code', async (req, res) => {
+  try {
+    const { email } = req.body || {};
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      return res.status(400).json({ error: 'Please enter a valid email address.' });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Generate random 6-digit verification code
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes validity
+
+    resetCodes.set(normalizedEmail, { code, expiresAt });
+
+    // Dispatch real email via email service
+    await sendPasswordResetEmail(normalizedEmail, code);
+
+    return res.json({
+      message: `A 6-digit security verification code has been sent to ${normalizedEmail}.`,
+    });
+  } catch (err) {
+    console.error('Request code error:', err);
+    res.status(500).json({ error: 'Failed to send verification code.' });
+  }
+});
+
+// ─── POST /api/auth/verify-reset-code ─────────────────────────────────────────
+
+router.post('/verify-reset-code', async (req, res) => {
+  try {
+    const { email, code } = req.body || {};
+    if (!email || !code) {
+      return res.status(400).json({ error: 'Email and 6-digit verification code are required.' });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const stored = resetCodes.get(normalizedEmail);
+
+    if (!stored) {
+      return res.status(400).json({ error: 'No verification code requested for this email. Please request a code first.' });
+    }
+
+    if (Date.now() > stored.expiresAt) {
+      resetCodes.delete(normalizedEmail);
+      return res.status(400).json({ error: 'Verification code has expired. Please request a new code.' });
+    }
+
+    if (stored.code !== code.toString().trim()) {
+      return res.status(400).json({ error: 'Invalid verification code. Please check and try again.' });
+    }
+
+    return res.json({
+      message: 'Verification code confirmed successfully.',
+      verified: true,
+    });
+  } catch (err) {
+    console.error('Verify code error:', err);
+    res.status(500).json({ error: 'Failed to verify code.' });
+  }
+});
+
+// ─── POST /api/auth/reset-password ───────────────────────────────────────────
+
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { email, code, newPassword } = req.body || {};
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      return res.status(400).json({ error: 'Please provide a valid email address.' });
+    }
+    if (!newPassword || typeof newPassword !== 'string' || newPassword.length < 6) {
+      return res.status(400).json({ error: 'New password must be at least 6 characters.' });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const stored = resetCodes.get(normalizedEmail);
+
+    if (!stored || stored.code !== code?.toString().trim()) {
+      return res.status(400).json({ error: 'Invalid or expired verification code. Please verify code first.' });
+    }
+
+    let user = db.users.one(u => u.email?.toLowerCase().trim() === normalizedEmail);
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    let updated;
+
+    if (!user) {
+      user = {
+        id: `user-${Date.now()}`,
+        name: normalizedEmail.split('@')[0],
+        email: normalizedEmail,
+        password: passwordHash,
+        role: 'farmer',
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(normalizedEmail)}&background=random`,
+        joined: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+      };
+      await db.users.insert(user);
+      updated = user;
+    } else {
+      updated = await db.users.updateById(user.id, { password: passwordHash });
+    }
+
+    // Clean up reset code after successful password update
+    resetCodes.delete(normalizedEmail);
+
+    return res.json({
+      message: 'Password reset successfully. You can now log in with your new password.',
+      data: sanitizeUser(updated || user),
+    });
+  } catch (err) {
+    console.error('Password reset error:', err);
+    res.status(500).json({ error: 'Failed to reset password. Please try again.' });
+  }
 });
 
 export default router;

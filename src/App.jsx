@@ -258,11 +258,8 @@ function App() {
     setUsers(getMergedUsers())
   }, [currentUser?.email])
 
-  // Admin-only: sync real users from backend database
+  // Real-time user list sync from backend database
   useEffect(() => {
-    const isAdmin = currentUser?.role === 'admin' || currentUser?.email === 'classicgenius@dev'
-    if (!isAdmin) return
-
     async function syncUsersFromAPI() {
       try {
         const res = await api.get('/users')
@@ -285,7 +282,7 @@ function App() {
     syncUsersFromAPI()
     const userInterval = setInterval(syncUsersFromAPI, 4000)
     return () => clearInterval(userInterval)
-  }, [currentUser?.email, currentUser?.role])
+  }, [])
 
   const currentUserRef = useRef(currentUser)
   useEffect(() => {

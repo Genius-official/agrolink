@@ -40,17 +40,20 @@ export default function AdminDashboard({
   // Which user row is expanded in "All Users" tab
   const [expandedUserEmail, setExpandedUserEmail] = useState(null);
 
-  // Helper to check if a user is an actual registered user vs seed data
+  // Helper to check if a user is an actual registered user vs demo seed data
   const isRegisteredUser = (user) => {
-    if (!user) return false;
-    // Users registered via AuthPage get id format `user-<timestamp>` or are in agrolink_users localStorage
-    try {
-      const localUsers = JSON.parse(localStorage.getItem('agrolink_users') || '[]');
-      if (localUsers.some(u => u.email?.toLowerCase().trim() === user.email?.toLowerCase().trim())) {
-        return true;
-      }
-    } catch { /* ignore */ }
-    return user.id?.startsWith('user-') || user.id?.startsWith('dev-');
+    if (!user || !user.email) return false;
+    const email = user.email.toLowerCase().trim();
+    const seedEmails = new Set([
+      'classicgenius@dev',
+      'james.asante@agrolink.gh',
+      'farmer.brent@agrolink.gh',
+      'kwame.farms@accra.gh',
+      'accra.fresh@market.gh',
+      'retail@buyers.gh'
+    ]);
+    if (seedEmails.has(email)) return false;
+    return true;
   };
 
   // --- Metrics ---

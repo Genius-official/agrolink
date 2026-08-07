@@ -19,9 +19,19 @@ export const config = {
     .split(',')
     .map(o => o.trim()),
 
-  // External APIs
+  // External APIs & Email
   paystackSecretKey: process.env.PAYSTACK_SECRET_KEY || '',
   gnewsApiKey: process.env.GNEWS_API_KEY || '',
+
+  // Email delivery — supports Gmail SMTP, Brevo, Resend, SendGrid
+  smtpHost: process.env.SMTP_HOST || '',
+  smtpPort: parseInt(process.env.SMTP_PORT || '465'),
+  smtpUser: process.env.SMTP_USER || '',
+  smtpPass: process.env.SMTP_PASS || '',
+  emailFrom: process.env.EMAIL_FROM || process.env.SMTP_USER || '',
+  brevoApiKey: process.env.BREVO_API_KEY || '',
+  resendApiKey: process.env.RESEND_API_KEY || '',
+  sendgridApiKey: process.env.SENDGRID_API_KEY || '',
 
   // MySQL Database Config (Supports Railway & Local MySQL)
   dbUrl: process.env.MYSQL_URL || process.env.MYSQLURL || process.env.DATABASE_URL || '',
