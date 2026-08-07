@@ -23,12 +23,14 @@ export const config = {
   paystackSecretKey: process.env.PAYSTACK_SECRET_KEY || '',
   gnewsApiKey: process.env.GNEWS_API_KEY || '',
 
-  // MySQL Database Config
-  dbHost: process.env.DB_HOST || 'localhost',
-  dbPort: parseInt(process.env.DB_PORT) || 3306,
-  dbUser: process.env.DB_USER || 'root',
-  dbPassword: process.env.DB_PASSWORD || '',
-  dbName: process.env.DB_NAME || 'agrolink',
+  // MySQL Database Config (Supports Railway & Local MySQL)
+  dbUrl: process.env.MYSQL_URL || process.env.MYSQLURL || process.env.DATABASE_URL || '',
+  dbHost: process.env.MYSQLHOST || process.env.MYSQL_HOST || process.env.DB_HOST || 'localhost',
+  dbPort: parseInt(process.env.MYSQLPORT || process.env.MYSQL_PORT || process.env.DB_PORT || '3306'),
+  dbUser: process.env.MYSQLUSER || process.env.MYSQL_USER || process.env.DB_USER || 'root',
+  dbPassword: process.env.MYSQLPASSWORD || process.env.MYSQL_PASSWORD || process.env.DB_PASSWORD || '',
+  dbName: process.env.MYSQLDATABASE || process.env.MYSQL_DATABASE || process.env.DB_NAME || 'agrolink',
+  dbSsl: process.env.DB_SSL === 'true' || process.env.MYSQL_SSL === 'true',
 
   // Helpers
   isDev: (process.env.NODE_ENV || 'development') === 'development',

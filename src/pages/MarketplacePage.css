@@ -772,9 +772,20 @@
   text-transform: uppercase;
 }
 
-.h-status.status-planting { background: #DBEAFE; color: #1D4ED8; }
-.h-status.status-maturing { background: #FEF3C7; color: #D97706; }
-.h-status.status-harvesting { background: #D1FAE5; color: #065F46; }
+.h-status.status-planting {
+  background: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.h-status.status-maturing {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.h-status.status-harvesting {
+  background: #D1FAE5;
+  color: #065F46;
+}
 
 .farmer-name {
   font-size: 12px;
@@ -857,10 +868,12 @@ body.dark-mode .marketplace-floating-promo-bar {
     transform: scale(0.8);
     opacity: 0.5;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 1;
   }
+
   100% {
     transform: scale(0.8);
     opacity: 0.5;
@@ -923,9 +936,12 @@ body.dark-mode .promo-value-tag {
 }
 
 @keyframes shimmerGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 4px rgba(124, 58, 237, 0.1);
   }
+
   50% {
     box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
   }
@@ -1115,6 +1131,7 @@ body.dark-mode .clickable-farmer-info:hover {
     opacity: 0;
     transform: scale(0.95) translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);

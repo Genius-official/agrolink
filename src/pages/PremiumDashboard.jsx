@@ -377,6 +377,7 @@ export default function PremiumDashboard({ currentUser, products, orders, onUpda
       onSuccess: async (paymentData) => {
         try {
           await api.post('/subscriptions/upgrade', {
+            email: currentUser?.email,
             plan: selectedPlan,
             amountGhs: amount,
             paystackRef: paymentData.reference,
@@ -405,8 +406,17 @@ export default function PremiumDashboard({ currentUser, products, orders, onUpda
   };
 
   // Switch Plan/Downgrade Handler
-  const handleCancelPlan = () => {
+  const handleCancelPlan = async () => {
     if (window.confirm("Are you sure you want to cancel your Premium Plan? You will lose access to premium insights and tools immediately.")) {
+      try {
+        await api.post('/subscriptions/upgrade', {
+          email: currentUser?.email,
+          plan: 'free',
+          amountGhs: 0,
+          paystackRef: 'CANCELLED',
+        });
+      } catch { /* ignore */ }
+
       onUpdateProfile?.({
         ...currentUser,
         plan: 'free',

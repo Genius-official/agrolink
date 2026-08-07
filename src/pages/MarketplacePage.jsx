@@ -55,8 +55,8 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
 
     return createPortal(
         <div className="product-modal-overlay" onClick={onClose}>
-            <div 
-                className="product-modal" 
+            <div
+                className="product-modal"
                 onClick={e => e.stopPropagation()}
                 style={hasCustomTheme ? { borderColor: seller.shopTheme } : {}}
             >
@@ -124,7 +124,7 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
                         {/* Farmer / Store Front Card */}
                         <div className="product-modal__farmer-card">
                             <h4 className="product-modal__section-title">Farmer / Store details</h4>
-                            <div 
+                            <div
                                 className="product-modal__farmer-info clickable-farmer-info"
                                 onClick={() => {
                                     onOpenFarmerStore?.(product.ownerEmail);
@@ -149,14 +149,14 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
                                 <a href={`tel:${product.phone}`} className="product-modal__contact-btn">
                                     <Phone size={16} /> Call Now
                                 </a>
-                                <button 
+                                <button
                                     className="product-modal__chat-btn"
                                     onClick={() => onChat?.({ name: product.farm, email: product.ownerEmail })}
                                 >
                                     <MessageCircle size={16} /> Chat
                                 </button>
                                 {whatsappNum && (
-                                    <a 
+                                    <a
                                         href={`https://wa.me/${whatsappNum.replace(/\s+/g, '')}?text=Hi,%20I'm%20interested%20in%20your%20product:%20${encodeURIComponent(product.name)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -170,7 +170,7 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
 
                         {/* Bulk Purchase Negotiation Area */}
                         <div className="bulk-negotiation-toggle-area">
-                            <button 
+                            <button
                                 className="bulk-toggle-btn"
                                 onClick={() => setShowBulkForm(!showBulkForm)}
                             >
@@ -190,7 +190,7 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
                                             <div className="form-row">
                                                 <div className="form-group">
                                                     <label>Qty Required ({product.unit})</label>
-                                                    <input 
+                                                    <input
                                                         type="number"
                                                         placeholder="e.g. 500"
                                                         value={bulkQty}
@@ -200,7 +200,7 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
                                                 </div>
                                                 <div className="form-group">
                                                     <label>Offered Bid Price (GH₵/{product.unit})</label>
-                                                    <input 
+                                                    <input
                                                         type="number"
                                                         step="0.01"
                                                         placeholder={`e.g. ${(product.price * 0.9).toFixed(2)}`}
@@ -212,7 +212,7 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
                                             </div>
                                             <div className="form-group">
                                                 <label>Additional Delivery Details/Notes</label>
-                                                <textarea 
+                                                <textarea
                                                     placeholder="Requesting shipping to Accra main harbor, etc."
                                                     value={bulkComments}
                                                     onChange={e => setBulkComments(e.target.value)}
@@ -265,7 +265,7 @@ function FarmerStorefrontModal({ farmerEmail, onClose, products = [], onAddToCar
     const location = seller?.location || firstProduct.location || 'Ashanti Region';
     const phone = seller?.phone || firstProduct.phone || '+233 24 123 4567';
     const email = farmerEmail;
-    
+
     const isVerified = seller?.verified || false;
     const isOrganic = seller?.organicCertified || false;
     const hasCustomTheme = seller?.shopTheme || false;
@@ -277,8 +277,8 @@ function FarmerStorefrontModal({ farmerEmail, onClose, products = [], onAddToCar
 
     return createPortal(
         <div className="farmer-modal-overlay" onClick={onClose}>
-            <div 
-                className="farmer-modal" 
+            <div
+                className="farmer-modal"
                 onClick={e => e.stopPropagation()}
                 style={hasCustomTheme ? { borderColor: seller.shopTheme } : {}}
             >
@@ -317,7 +317,7 @@ function FarmerStorefrontModal({ farmerEmail, onClose, products = [], onAddToCar
                         <div className="farmer-modal__about">
                             <h4 className="farmer-modal__section-title">About the Farm</h4>
                             <p className="farmer-modal__bio">{bio}</p>
-                            
+
                             <div className="farmer-modal__details-list">
                                 <p><strong>Email:</strong> {email}</p>
                                 <p><strong>Phone:</strong> {phone}</p>
@@ -330,14 +330,14 @@ function FarmerStorefrontModal({ farmerEmail, onClose, products = [], onAddToCar
                                 <a href={`tel:${phone}`} className="farmer-modal__btn farmer-modal__btn--call">
                                     <Phone size={16} /> Call Now
                                 </a>
-                                <button 
+                                <button
                                     className="farmer-modal__btn farmer-modal__btn--chat"
                                     onClick={() => onChat?.({ name: farmName, email: farmerEmail })}
                                 >
                                     <MessageCircle size={16} /> Chat
                                 </button>
                                 {whatsappNum && (
-                                    <a 
+                                    <a
                                         href={`https://wa.me/${whatsappNum.replace(/\s+/g, '')}?text=Hi,%20I'm%20interested%20in%20buying%20from%20your%20farm.`}
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -358,8 +358,8 @@ function FarmerStorefrontModal({ farmerEmail, onClose, products = [], onAddToCar
                         ) : (
                             <div className="farmer-modal__products-grid">
                                 {farmerProducts.map(p => (
-                                    <div 
-                                        key={p.id} 
+                                    <div
+                                        key={p.id}
                                         className="farmer-product-card"
                                         onClick={() => {
                                             onSelectProduct?.(p);
@@ -368,7 +368,7 @@ function FarmerStorefrontModal({ farmerEmail, onClose, products = [], onAddToCar
                                     >
                                         <div className="farmer-product-card__image">
                                             <img src={p.img} alt={p.name} />
-                                            <button 
+                                            <button
                                                 className="farmer-product-card__add"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
@@ -399,13 +399,13 @@ function FarmerStorefrontModal({ farmerEmail, onClose, products = [], onAddToCar
     );
 }
 
-export default function MarketplacePage({ 
-    products = [], 
+export default function MarketplacePage({
+    products = [],
     users = [],
-    cart = [], 
-    onAddToCart, 
-    onUpdateCartQty, 
-    onRemoveFromCart, 
+    cart = [],
+    onAddToCart,
+    onUpdateCartQty,
+    onRemoveFromCart,
     onClearCart,
     onCheckout,
     onOpenCart,
@@ -557,8 +557,8 @@ export default function MarketplacePage({
                         <span className="pulse-dot" />
                         <Tag size={13} /> PROMO ALERT
                     </div>
-                    
-                    <div 
+
+                    <div
                         className="floating-promo-content"
                         onClick={() => {
                             const promo = activePromotions[currentPromoIndex];
@@ -580,8 +580,8 @@ export default function MarketplacePage({
                                 {activePromotions[currentPromoIndex]?.type === 'percent'
                                     ? `${activePromotions[currentPromoIndex]?.value}% OFF`
                                     : activePromotions[currentPromoIndex]?.type === 'fixed'
-                                    ? `GH₵${activePromotions[currentPromoIndex]?.value} OFF`
-                                    : 'SPECIAL DEAL'}
+                                        ? `GH₵${activePromotions[currentPromoIndex]?.value} OFF`
+                                        : 'SPECIAL DEAL'}
                             </span>
                             {activePromotions[currentPromoIndex]?.code && (
                                 <span className="promo-code-chip">
@@ -592,7 +592,7 @@ export default function MarketplacePage({
                                 on <strong>{activePromotions[currentPromoIndex]?.targetProduct?.name}</strong>
                             </span>
                         </div>
-                        
+
                         <div className="floating-promo-cta">
                             <span>View Deal</span>
                             <ArrowRight size={14} />
@@ -661,7 +661,7 @@ export default function MarketplacePage({
                                 </div>
                                 <h3 className="product-card__name">{product.name}</h3>
                                 <div className="product-card__meta">
-                                    <span 
+                                    <span
                                         className="clickable-farm-name"
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -696,17 +696,17 @@ export default function MarketplacePage({
                     <p className="widget-desc">Pre-order or schedule enquiries directly with farmers for upcoming crop batches.</p>
                     <div className="harvest-widget-grid">
                         {upcomingHarvests.map(h => (
-                          <div key={h.id} className="harvest-widget-card">
-                              <div className="harvest-widget-header">
-                                  <span className="crop-name">{h.crop}</span>
-                                  <span className={`h-status status-${h.status}`}>{h.status}</span>
-                              </div>
-                              <p className="farmer-name">Farm: {h.farmerName}</p>
-                              <div className="harvest-dates-row">
-                                  <span>Est. Yield: <strong>{h.quantity || 'TBD'}</strong></span>
-                                  <span>Harvest: <strong>{h.expectedHarvestDate}</strong></span>
-                              </div>
-                          </div>
+                            <div key={h.id} className="harvest-widget-card">
+                                <div className="harvest-widget-header">
+                                    <span className="crop-name">{h.crop}</span>
+                                    <span className={`h-status status-${h.status}`}>{h.status}</span>
+                                </div>
+                                <p className="farmer-name">Farm: {h.farmerName}</p>
+                                <div className="harvest-dates-row">
+                                    <span>Est. Yield: <strong>{h.quantity || 'TBD'}</strong></span>
+                                    <span>Harvest: <strong>{h.expectedHarvestDate}</strong></span>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>

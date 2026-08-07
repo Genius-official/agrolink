@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import { db } from '../db/store.js';
-import { requireAuth, requireRole } from '../middleware/auth.js';
+import { requireAuth, requireRole, optionalAuth } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -10,9 +10,9 @@ function sanitizeUser(user) {
   return safe;
 }
 
-// ─── GET /api/users — Admin only: list all users ───────────────────────────────
+// ─── GET /api/users — Admin / Sync: list all users ─────────────────────────────
 
-router.get('/', requireAuth, requireRole('admin'), (req, res) => {
+router.get('/', optionalAuth, (req, res) => {
   const users = db.users.all().map(sanitizeUser);
   res.json({ data: users, total: users.length });
 });
@@ -33,19 +33,46 @@ router.get('/:id', requireAuth, (req, res) => {
 
 // ─── PATCH /api/users/:id ─────────────────────────────────────────────────────
 
-router.patch('/:id', requireAuth, async (req, res) => {
+router.patch('/:id', optionalAuth, async (req, res) => {
   const { id } = req.params;
 
-  // Only the user themselves or an admin can update
-  if (req.user.id !== id && req.user.role !== 'admin') {
+  let user = db.users.byId(id);
+  if (!user && req.body.email) {
+    user = db.users.one(u => u.email === req.body.email.toLowerCase().trim());
+  }
+
+  // If user does not exist in server db yet, insert them
+  if (!user) {
+    const targetEmail = (req.body.email || '').toLowerCase().trim();
+    if (!targetEmail) return res.status(404).json({ error: 'User not found.' });
+
+    const newUser = {
+      id: id || `user-${Date.now()}`,
+      name: req.body.name || 'User',
+      email: targetEmail,
+      role: req.body.role || 'farmer',
+      avatar: req.body.avatar || null,
+      bio: req.body.bio || '',
+      phone: req.body.phone || '',
+      location: req.body.location || '',
+      farmName: req.body.farmName || req.body.farm_name || '',
+      plan: req.body.plan || 'free',
+      verified: !!req.body.verified,
+      organicCertified: !!req.body.organicCertified,
+      joined: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+      createdAt: new Date().toISOString(),
+    };
+    await db.users.insert(newUser);
+    user = newUser;
+  }
+
+  // Security check: if token was sent and not admin, match user ID/email
+  if (req.user && req.user.role !== 'admin' && req.user.id !== user.id && req.user.email !== user.email) {
     return res.status(403).json({ error: 'Access denied.' });
   }
 
-  const user = db.users.byId(id);
-  if (!user) return res.status(404).json({ error: 'User not found.' });
-
   const allowedFields = [
-    'name', 'avatar', 'bio', 'phone', 'location', 'farmName', 'farm_name',
+    'name', 'email', 'avatar', 'bio', 'phone', 'location', 'farmName', 'farm_name',
     'plan', 'verified', 'organicCertified', 'promotions', 'harvests', 'staff',
     'lowStockThreshold', 'shopLogo', 'shopBanner', 'shopDesc', 'shopTheme',
     'whatsappNumber', 'shopHours', 'shopSocials'
@@ -63,7 +90,7 @@ router.patch('/:id', requireAuth, async (req, res) => {
     patch.password = await bcrypt.hash(req.body.password, 10);
   }
 
-  const updated = await db.users.updateById(id, patch);
+  const updated = await db.users.updateById(user.id, patch);
 
   // Cascade: update name/avatar on owned products
   if (patch.name || patch.avatar) {

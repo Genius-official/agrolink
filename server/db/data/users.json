@@ -63,11 +63,27 @@
     "role": "farmer",
     "avatar": "https://ui-avatars.com/api/?name=tester1&background=random",
     "joined": "Jul 2026",
-    "bio": "",
+    "bio": "Dedicated to cultivating high-quality organic produce with sustainable farming practices across Ghana.",
     "createdAt": "2026-07-31T00:41:05.285Z",
     "plan": "starter",
     "planExpiresAt": "2026-08-30T01:21:56.781Z",
-    "updatedAt": "2026-08-04T00:58:18.601Z"
+    "updatedAt": "2026-08-07T01:11:01.359Z",
+    "promotions": [
+      {
+        "title": "HAPPY NEW MONTH PROMO",
+        "type": "percent",
+        "value": "5",
+        "code": "",
+        "productId": "1786062993945",
+        "active": true,
+        "id": 1786065061354,
+        "productName": "Eggs",
+        "farmName": "tester1"
+      }
+    ],
+    "phone": "02424242424",
+    "location": "Accra, Greater Accra",
+    "farmName": "AgroLink Fresh Organic Farm"
   },
   {
     "id": "user-1785459621973",
@@ -81,16 +97,16 @@
     "createdAt": "2026-07-31T01:00:21.973Z",
     "plan": "starter",
     "planExpiresAt": "2026-08-30T01:04:57.151Z",
-    "updatedAt": "2026-08-04T01:20:53.317Z",
+    "updatedAt": "2026-08-07T01:09:40.033Z",
     "promotions": [
       {
-        "title": "FOR THE LOVE FOR MY CUSTOMERS",
+        "title": "FOR MY NEW CUSTOMERS :)",
         "type": "percent",
         "value": "2",
         "code": "",
         "productId": "1785806229709",
         "active": true,
-        "id": 1785806453302,
+        "id": 1786064979976,
         "productName": "Grapes",
         "farmName": "classic"
       }
@@ -106,5 +122,18 @@
     "joined": "Jul 2026",
     "bio": "",
     "createdAt": "2026-07-31T01:06:37.610Z"
+  },
+  {
+    "id": "user-1786067009531",
+    "name": "Opoku Gideon",
+    "email": "opp@gmail.com",
+    "password": "$2a$10$P7ngZ993PbPiySfxklTtYuoYQzYvDMcD8BRdPEPXanWKsTAPppoPK",
+    "role": "farmer",
+    "avatar": "https://ui-avatars.com/api/?name=Opoku%20Gideon&background=random",
+    "joined": "Aug 2026",
+    "bio": "",
+    "createdAt": "2026-08-07T01:43:29.554Z",
+    "plan": "business",
+    "updatedAt": "2026-08-07T01:43:47.271Z"
   }
 ]

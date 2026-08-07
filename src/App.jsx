@@ -258,6 +258,35 @@ function App() {
     setUsers(getMergedUsers())
   }, [currentUser?.email])
 
+  // Admin-only: sync real users from backend database
+  useEffect(() => {
+    const isAdmin = currentUser?.role === 'admin' || currentUser?.email === 'classicgenius@dev'
+    if (!isAdmin) return
+
+    async function syncUsersFromAPI() {
+      try {
+        const res = await api.get('/users')
+        const serverUsers = Array.isArray(res?.data) ? res.data : (Array.isArray(res) ? res : [])
+        if (Array.isArray(serverUsers) && serverUsers.length > 0) {
+          setUsers(prev => {
+            const deletedEmails = new Set(JSON.parse(localStorage.getItem('agrolink_deleted_users') || '[]'))
+            const validServerUsers = serverUsers.filter(u => u.email && !deletedEmails.has(u.email.toLowerCase().trim()))
+            const serverEmails = new Set(validServerUsers.map(u => u.email.toLowerCase().trim()))
+
+            // Keep local-only users not on the server yet
+            const localOnly = prev.filter(u => u.email && !serverEmails.has(u.email.toLowerCase().trim()) && !deletedEmails.has(u.email.toLowerCase().trim()))
+
+            return [...validServerUsers, ...localOnly]
+          })
+        }
+      } catch { /* server offline — keep local/seed users */ }
+    }
+
+    syncUsersFromAPI()
+    const userInterval = setInterval(syncUsersFromAPI, 4000)
+    return () => clearInterval(userInterval)
+  }, [currentUser?.email, currentUser?.role])
+
   const currentUserRef = useRef(currentUser)
   useEffect(() => {
     currentUserRef.current = currentUser
@@ -619,25 +648,58 @@ function App() {
   // ─── Profile handler ───────────────────────────────────────────────────────
 
   const handleUpdateProfile = async (updatedProfile) => {
+    if (!currentUser || !updatedProfile) return
+    const merged = { ...currentUser, ...updatedProfile }
+
+    // 1. Instantly update UI state
+    setCurrentUser(merged)
+
+    // 2. Update users list in App state
+    setUsers(prev => prev.map(u =>
+      u.email?.toLowerCase().trim() === currentUser.email?.toLowerCase().trim()
+        ? { ...u, ...updatedProfile }
+        : u
+    ))
+
+    // 3. Update localStorage session and users storage
     try {
-      const res = await api.patch(`/users/${currentUser.id}`, updatedProfile)
-      const updated = res.data
-      setCurrentUser(updated)
-      // Cascade: update owned products in local state
-      if (updatedProfile.name || updatedProfile.avatar) {
-        setProducts(prev => prev.map(p =>
-          p.ownerEmail === currentUser.email
-            ? { ...p, farm: updatedProfile.name || p.farm, sellerAvatar: updatedProfile.avatar || p.sellerAvatar }
-            : p
-        ))
-        setMessages(prev => prev.map(m =>
-          m.senderEmail === currentUser.email
-            ? { ...m, senderName: updatedProfile.name || m.senderName, senderAvatar: updatedProfile.avatar || m.senderAvatar }
-            : m
-        ))
+      localStorage.setItem('agrolink_session', JSON.stringify(merged))
+      const localUsers = JSON.parse(localStorage.getItem('agrolink_users') || '[]')
+      const idx = localUsers.findIndex(u => u.email?.toLowerCase().trim() === currentUser.email?.toLowerCase().trim())
+      if (idx >= 0) {
+        localUsers[idx] = { ...localUsers[idx], ...updatedProfile }
+      } else {
+        localUsers.push(merged)
+      }
+      localStorage.setItem('agrolink_users', JSON.stringify(localUsers))
+    } catch { /* ignore */ }
+
+    // 4. Cascade name/avatar updates to owned products and sent messages
+    if (updatedProfile.name || updatedProfile.avatar) {
+      const curEmail = currentUser.email?.toLowerCase().trim()
+      setProducts(prev => prev.map(p =>
+        p.ownerEmail?.toLowerCase().trim() === curEmail
+          ? { ...p, farm: updatedProfile.name || p.farm, sellerAvatar: updatedProfile.avatar || p.sellerAvatar }
+          : p
+      ))
+      setMessages(prev => prev.map(m =>
+        m.senderEmail?.toLowerCase().trim() === curEmail
+          ? { ...m, senderName: updatedProfile.name || m.senderName, senderAvatar: updatedProfile.avatar || m.senderAvatar }
+          : m
+      ))
+    }
+
+    // 5. Persist to API backend in real-time
+    try {
+      const userId = currentUser.id || `user-${Date.now()}`
+      const res = await api.patch(`/users/${userId}`, { ...updatedProfile, email: currentUser.email })
+      if (res?.data) {
+        const serverUpdated = res.data
+        setCurrentUser(prev => ({ ...prev, ...serverUpdated }))
+        localStorage.setItem('agrolink_session', JSON.stringify({ ...merged, ...serverUpdated }))
       }
     } catch (err) {
-      console.error('Update profile failed:', err.message)
+      console.warn('API update profile fallback (saved to local state):', err.message)
     }
   }
 

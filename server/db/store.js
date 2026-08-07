@@ -54,15 +54,26 @@ async function insertMySQL(table, record) {
   const pool = getPool();
   try {
     if (table === 'users') {
+      const pwd = record.password || '$2a$10$dummyHashForUserUpdatesWithoutPasswordChange';
       await pool.query(
         `INSERT INTO users (id, name, email, password, role, avatar, bio, phone, location, farm_name, plan, plan_expires_at, joined)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE name=VALUES(name), password=VALUES(password), role=VALUES(role), avatar=VALUES(avatar), bio=VALUES(bio), phone=VALUES(phone), location=VALUES(location), farm_name=VALUES(farm_name), plan=VALUES(plan);`,
+         ON DUPLICATE KEY UPDATE 
+           name = VALUES(name),
+           role = VALUES(role),
+           avatar = COALESCE(VALUES(avatar), avatar),
+           bio = COALESCE(VALUES(bio), bio),
+           phone = COALESCE(VALUES(phone), phone),
+           location = COALESCE(VALUES(location), location),
+           farm_name = COALESCE(VALUES(farm_name), farm_name),
+           plan = VALUES(plan),
+           plan_expires_at = VALUES(plan_expires_at),
+           password = IF(VALUES(password) LIKE '$2a$10$dummyHash%', password, VALUES(password));`,
         [
           record.id,
-          record.name,
+          record.name || 'User',
           record.email,
-          record.password,
+          pwd,
           record.role || 'buyer',
           record.avatar || null,
           record.bio || null,

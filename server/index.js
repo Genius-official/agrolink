@@ -81,7 +81,7 @@ async function start() {
   await runSeed();
 
   httpServer.listen(config.port, () => {
-    console.log(`\n🌿 AgroLink API Server`);
+    console.log(`\n🌿 AgroLink API Server (Railway Connected)`);
     console.log(`   http://localhost:${config.port}/api/health`);
     console.log(`   Socket.io ready for real-time connections`);
     console.log(`   Environment: ${config.nodeEnv}\n`);

@@ -31,5 +31,16 @@
     "paidAt": "2026-08-07T01:28:57.797Z",
     "expiresAt": "2026-09-06T01:28:57.797Z",
     "createdAt": "2026-08-07T01:28:57.797Z"
+  },
+  {
+    "id": 1786067027227,
+    "userEmail": "opp@gmail.com",
+    "plan": "business",
+    "amountGhs": 299,
+    "paystackRef": "AGRO_BUSINESS_1786067018549_1423",
+    "status": "active",
+    "paidAt": "2026-08-07T01:43:47.227Z",
+    "expiresAt": "2026-09-06T01:43:47.227Z",
+    "createdAt": "2026-08-07T01:43:47.227Z"
   }
 ]

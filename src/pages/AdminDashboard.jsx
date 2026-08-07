@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Shield, Users, ShoppingCart, Award, Sparkles, AlertCircle, Ban, ArrowUpRight, DollarSign, Calendar, Trash2, Search, Check, X, Package, Crown, ChevronDown, ChevronRight, Star } from 'lucide-react';
+import { api } from '../utils/api';
 import './AdminDashboard.css';
 
 // Developer-only credential (same as AuthPage gate — double-check)
@@ -49,7 +50,7 @@ export default function AdminDashboard({
         return true;
       }
     } catch { /* ignore */ }
-    return user.id?.startsWith('user-');
+    return user.id?.startsWith('user-') || user.id?.startsWith('dev-');
   };
 
   // --- Metrics ---
@@ -112,8 +113,12 @@ export default function AdminDashboard({
 
   // --- Action Handlers ---
   const handleApproveVerification = (userEmail) => {
+    const target = users.find(u => u.email === userEmail);
     const updated = users.map(u => u.email === userEmail ? { ...u, verified: true } : u);
     setUsers(updated);
+    if (target?.id) {
+      api.patch(`/users/${target.id}`, { verified: true }).catch(() => {});
+    }
     if (currentUser?.email === userEmail) {
       const logged = JSON.parse(localStorage.getItem('agrolink_logged_user') || '{}');
       logged.verified = true;
@@ -122,8 +127,12 @@ export default function AdminDashboard({
   };
 
   const handleApproveOrganic = (userEmail) => {
+    const target = users.find(u => u.email === userEmail);
     const updated = users.map(u => u.email === userEmail ? { ...u, organicCertified: true } : u);
     setUsers(updated);
+    if (target?.id) {
+      api.patch(`/users/${target.id}`, { organicCertified: true }).catch(() => {});
+    }
     if (currentUser?.email === userEmail) {
       const logged = JSON.parse(localStorage.getItem('agrolink_logged_user') || '{}');
       logged.organicCertified = true;
@@ -132,6 +141,7 @@ export default function AdminDashboard({
   };
 
   const handleModifyPlan = (userEmail, targetPlan) => {
+    const target = users.find(u => u.email === userEmail);
     const updated = users.map(u => u.email === userEmail ? {
       ...u,
       plan: targetPlan,
@@ -139,6 +149,9 @@ export default function AdminDashboard({
       premiumRenewalDate: targetPlan !== 'free' ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString() : null
     } : u);
     setUsers(updated);
+    if (target?.id) {
+      api.patch(`/users/${target.id}`, { plan: targetPlan }).catch(() => {});
+    }
     if (currentUser?.email === userEmail) {
       const logged = JSON.parse(localStorage.getItem('agrolink_logged_user') || '{}');
       logged.plan = targetPlan;
@@ -148,9 +161,13 @@ export default function AdminDashboard({
   };
 
   const handleToggleSuspend = (userEmail, currentStatus) => {
+    const target = users.find(u => u.email === userEmail);
     const updatedStatus = currentStatus === 'suspended' ? 'active' : 'suspended';
     const updated = users.map(u => u.email === userEmail ? { ...u, status: updatedStatus } : u);
     setUsers(updated);
+    if (target?.id) {
+      api.patch(`/users/${target.id}`, { status: updatedStatus }).catch(() => {});
+    }
   };
 
   const handleToggleGlobalFeatured = (productId) => {

@@ -20,7 +20,7 @@
     "time": "12:58 AM",
     "timestamp": 1785459532605,
     "createdAt": "2026-07-31T00:58:52.659Z",
-    "updatedAt": "2026-08-04T00:58:18.635Z"
+    "updatedAt": "2026-08-07T01:11:01.409Z"
   },
   {
     "id": "msg-1785460623912-g3c86k2yfpo",
@@ -43,7 +43,7 @@
     "time": "01:31 AM",
     "timestamp": 1785461513453,
     "createdAt": "2026-07-31T01:31:53.479Z",
-    "updatedAt": "2026-08-04T00:58:18.635Z"
+    "updatedAt": "2026-08-07T01:11:01.409Z"
   },
   {
     "id": "msg-1785462088717-1u57xbau3gj",
@@ -66,7 +66,7 @@
     "time": "02:03 AM",
     "timestamp": 1785463420472,
     "createdAt": "2026-07-31T02:03:40.499Z",
-    "updatedAt": "2026-08-04T01:20:53.359Z"
+    "updatedAt": "2026-08-07T01:09:40.068Z"
   },
   {
     "id": "msg-1785463503308-1mkjrtqlrz4",
@@ -78,7 +78,7 @@
     "time": "02:05 AM",
     "timestamp": 1785463503308,
     "createdAt": "2026-07-31T02:05:03.309Z",
-    "updatedAt": "2026-08-04T00:58:18.635Z"
+    "updatedAt": "2026-08-07T01:11:01.409Z"
   },
   {
     "id": "msg-1785800894927-rnoh0fxxcf",
@@ -90,6 +90,18 @@
     "time": "11:48 PM",
     "timestamp": 1785800894927,
     "createdAt": "2026-08-03T23:48:14.984Z",
-    "updatedAt": "2026-08-04T01:20:53.359Z"
+    "updatedAt": "2026-08-07T01:09:40.068Z"
+  },
+  {
+    "id": "msg-1786062082770-havpx8xi0hf",
+    "senderEmail": "tester1@gmail.com",
+    "senderName": "tester1",
+    "senderAvatar": "https://ui-avatars.com/api/?name=tester1&background=random",
+    "recipientEmail": "tester2@gmail.com",
+    "text": "for sure, just check it out",
+    "time": "12:21 AM",
+    "timestamp": 1786062082770,
+    "createdAt": "2026-08-07T00:21:22.854Z",
+    "updatedAt": "2026-08-07T01:11:01.410Z"
   }
 ]

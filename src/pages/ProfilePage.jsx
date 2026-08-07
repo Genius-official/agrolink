@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MapPin, Phone, Mail, Edit3, Check, Star, Package, LogOut, ShoppingBag, CalendarDays, X, AlertTriangle, Camera, Upload, Crown, Zap, Sparkles, Shield, ArrowRight, CreditCard, ShieldCheck, CheckCircle2, User, Building } from 'lucide-react'
 import './ProfilePage.css'
 
@@ -78,6 +78,13 @@ export default function ProfilePage({ onLogout, userRole = 'farmer', currentUser
     const [showLogoutModal, setShowLogoutModal] = useState(false)
     const [showAvatarModal, setShowAvatarModal] = useState(false)
     const [saveSuccess, setSaveSuccess] = useState(false)
+
+    useEffect(() => {
+        if (!editing) {
+            setProfile(dynamicData);
+            setEditValues({ ...dynamicData });
+        }
+    }, [currentUser, editing]);
 
     const resizeImage = (base64Str) => {
         return new Promise((resolve) => {

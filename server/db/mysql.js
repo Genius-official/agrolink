@@ -9,38 +9,58 @@ let isConnected = false;
  */
 export async function initMySQL() {
   try {
-    // 1. Connection without DB selected to ensure database creation
-    const tempConn = await mysql.createConnection({
-      host: config.dbHost,
-      port: config.dbPort,
-      user: config.dbUser,
-      password: config.dbPassword,
-    });
+    const sslOption = config.dbSsl ? { rejectUnauthorized: false } : undefined;
 
-    await tempConn.query(`CREATE DATABASE IF NOT EXISTS \`${config.dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
-    await tempConn.end();
+    if (config.dbUrl) {
+      // 1. Connection via Railway MYSQL_URL connection string
+      pool = mysql.createPool({
+        uri: config.dbUrl,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0,
+        ssl: sslOption,
+      });
+    } else {
+      // 2. Connection without DB selected to ensure database creation
+      try {
+        const tempConn = await mysql.createConnection({
+          host: config.dbHost,
+          port: config.dbPort,
+          user: config.dbUser,
+          password: config.dbPassword,
+          ssl: sslOption,
+        });
 
-    // 2. Create Connection Pool for agrolink database
-    pool = mysql.createPool({
-      host: config.dbHost,
-      port: config.dbPort,
-      user: config.dbUser,
-      password: config.dbPassword,
-      database: config.dbName,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0,
-    });
+        await tempConn.query(`CREATE DATABASE IF NOT EXISTS \`${config.dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
+        await tempConn.end();
+      } catch {
+        // Ignored if user lacks CREATE DATABASE permission (e.g. Railway pre-provisioned DB)
+      }
+
+      // Create Connection Pool for target database
+      pool = mysql.createPool({
+        host: config.dbHost,
+        port: config.dbPort,
+        user: config.dbUser,
+        password: config.dbPassword,
+        database: config.dbName,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0,
+        ssl: sslOption,
+      });
+    }
 
     // Test connection
     const conn = await pool.getConnection();
     conn.release();
 
-    // 3. Auto-create core tables
+    // Auto-create core tables
     await createTables();
 
     isConnected = true;
-    console.log(`\n🐬 MySQL Database Connected Successfully! (${config.dbUser}@${config.dbHost}:${config.dbPort}/${config.dbName})`);
+    const targetInfo = config.dbUrl ? 'Railway MYSQL_URL' : `${config.dbUser}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+    console.log(`\n🐬 MySQL Database Connected Successfully! (${targetInfo})`);
     return true;
   } catch (err) {
     console.warn(`\n⚠️  MySQL connection failed (${err.message}). Defaulting to JSON file persistence layer.`);
