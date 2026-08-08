@@ -33,7 +33,8 @@ export async function connectSocket(email, { onMessage, onNotification, onOrderU
 
   if (!socket) {
     try {
-      const SOCKET_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') : undefined;
+      const envUrl = import.meta.env.VITE_API_URL?.trim();
+      const SOCKET_URL = envUrl ? envUrl.replace(/\/+$/, '').replace(/\/api$/, '') : undefined;
       socket = socketIO(SOCKET_URL, {
         path: '/socket.io',
         transports: ['websocket', 'polling'],

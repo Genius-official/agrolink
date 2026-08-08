@@ -4,7 +4,14 @@
  * All routes are proxied by Vite to http://localhost:3001 during development.
  */
 
-const BASE = import.meta.env.VITE_API_URL || '/api';
+function getApiBaseUrl() {
+  const envUrl = import.meta.env.VITE_API_URL?.trim();
+  if (!envUrl) return '/api';
+  const clean = envUrl.replace(/\/+$/, '');
+  return clean.endsWith('/api') ? clean : `${clean}/api`;
+}
+
+const BASE = getApiBaseUrl();
 
 // Token management
 export const tokenStorage = {
