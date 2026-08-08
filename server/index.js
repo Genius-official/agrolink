@@ -49,6 +49,10 @@ const io = initializeSockets(httpServer);
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
+app.get('/', (_req, res) =>
+  res.json({ name: 'AgroLink API Server', status: 'online', health: '/api/health', version: '1.0.0' })
+);
+
 app.get('/api/health', (_req, res) =>
   res.json({ status: 'ok', timestamp: new Date().toISOString(), version: '1.0.0' })
 );
