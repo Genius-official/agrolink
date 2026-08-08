@@ -33,7 +33,8 @@ export async function connectSocket(email, { onMessage, onNotification, onOrderU
 
   if (!socket) {
     try {
-      const envUrl = import.meta.env.VITE_API_URL?.trim();
+      let envUrl = import.meta.env.VITE_API_URL?.trim();
+      if (envUrl && envUrl.includes('vercel.app')) envUrl = '';
       const SOCKET_URL = envUrl ? envUrl.replace(/\/+$/, '').replace(/\/api$/, '') : undefined;
       socket = socketIO(SOCKET_URL, {
         path: '/socket.io',

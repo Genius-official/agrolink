@@ -5,7 +5,17 @@
  */
 
 function getApiBaseUrl() {
-  const envUrl = import.meta.env.VITE_API_URL?.trim();
+  let envUrl = import.meta.env.VITE_API_URL?.trim();
+  if (typeof window !== 'undefined' && envUrl) {
+    try {
+      const parsed = new URL(envUrl);
+      if (parsed.origin === window.location.origin || parsed.hostname.includes('vercel.app')) {
+        envUrl = '';
+      }
+    } catch {
+      // Invalid URL
+    }
+  }
   if (!envUrl) return '/api';
   const clean = envUrl.replace(/\/+$/, '');
   return clean.endsWith('/api') ? clean : `${clean}/api`;
