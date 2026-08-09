@@ -33,11 +33,12 @@ export async function connectSocket(email, { onMessage, onNotification, onOrderU
 
   if (!socket) {
     try {
-      let envUrl = import.meta.env.VITE_API_URL?.trim();
-      if (!envUrl || envUrl.includes('vercel.app')) {
-        envUrl = import.meta.env.PROD ? 'https://agrolink-production-182c.up.railway.app' : '';
-      }
-      const SOCKET_URL = envUrl ? envUrl.replace(/\/+$/, '').replace(/\/api$/, '') : undefined;
+      const RAILWAY_SOCKET_URL = 'https://agrolink-production-182c.up.railway.app';
+      const SOCKET_URL = import.meta.env.DEV
+        ? undefined
+        : (import.meta.env.VITE_API_URL && !import.meta.env.VITE_API_URL.includes('vercel.app')
+            ? import.meta.env.VITE_API_URL.replace(/\/+$/, '').replace(/\/api$/, '')
+            : RAILWAY_SOCKET_URL);
       socket = socketIO(SOCKET_URL, {
         path: '/socket.io',
         transports: ['websocket', 'polling'],

@@ -4,25 +4,17 @@
  * All routes are proxied by Vite to http://localhost:3001 during development.
  */
 
-function getApiBaseUrl() {
-  let envUrl = import.meta.env.VITE_API_URL?.trim();
+const RAILWAY_BACKEND_URL = 'https://agrolink-production-182c.up.railway.app/api';
 
-  // If VITE_API_URL is missing or set to a Vercel domain, fallback to live Railway backend in production
-  if (!envUrl || envUrl.includes('vercel.app')) {
-    if (import.meta.env.PROD) {
-      return 'https://agrolink-production-182c.up.railway.app/api';
-    }
-    return '/api';
-  }
+const BASE = import.meta.env.DEV
+  ? '/api'
+  : (import.meta.env.VITE_API_URL && !import.meta.env.VITE_API_URL.includes('vercel.app')
+      ? (import.meta.env.VITE_API_URL.replace(/\/+$/, '').endsWith('/api')
+          ? import.meta.env.VITE_API_URL.replace(/\/+$/, '')
+          : `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api`)
+      : RAILWAY_BACKEND_URL);
 
-  if (envUrl.startsWith('http://') && !envUrl.includes('localhost')) {
-    envUrl = envUrl.replace(/^http:\/\//i, 'https://');
-  }
-  const clean = envUrl.replace(/\/+$/, '');
-  return clean.endsWith('/api') ? clean : `${clean}/api`;
-}
-
-const BASE = getApiBaseUrl();
+console.log('🌿 [AgroLink API] Active backend URL:', BASE);
 
 // Token management
 export const tokenStorage = {
