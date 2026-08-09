@@ -34,7 +34,9 @@ export async function connectSocket(email, { onMessage, onNotification, onOrderU
   if (!socket) {
     try {
       let envUrl = import.meta.env.VITE_API_URL?.trim();
-      if (envUrl && envUrl.includes('vercel.app')) envUrl = '';
+      if (!envUrl || envUrl.includes('vercel.app')) {
+        envUrl = import.meta.env.PROD ? 'https://agrolink-production-182c.up.railway.app' : '';
+      }
       const SOCKET_URL = envUrl ? envUrl.replace(/\/+$/, '').replace(/\/api$/, '') : undefined;
       socket = socketIO(SOCKET_URL, {
         path: '/socket.io',

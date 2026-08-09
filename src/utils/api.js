@@ -6,17 +6,15 @@
 
 function getApiBaseUrl() {
   let envUrl = import.meta.env.VITE_API_URL?.trim();
-  if (typeof window !== 'undefined' && envUrl) {
-    try {
-      const parsed = new URL(envUrl);
-      if (parsed.origin === window.location.origin || parsed.hostname.includes('vercel.app')) {
-        envUrl = '';
-      }
-    } catch {
-      // Invalid URL
+
+  // If VITE_API_URL is missing or set to a Vercel domain, fallback to live Railway backend in production
+  if (!envUrl || envUrl.includes('vercel.app')) {
+    if (import.meta.env.PROD) {
+      return 'https://agrolink-production-182c.up.railway.app/api';
     }
+    return '/api';
   }
-  if (!envUrl) return '/api';
+
   if (envUrl.startsWith('http://') && !envUrl.includes('localhost')) {
     envUrl = envUrl.replace(/^http:\/\//i, 'https://');
   }
