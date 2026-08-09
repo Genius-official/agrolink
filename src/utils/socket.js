@@ -33,12 +33,23 @@ export async function connectSocket(email, { onMessage, onNotification, onOrderU
 
   if (!socket) {
     try {
-      const RAILWAY_SOCKET_URL = 'https://agrolink-production-182c.up.railway.app';
+      function formatSocketUrl(url) {
+        if (!url || url.includes('vercel.app')) {
+          return 'https://agrolink-production-182c.up.railway.app';
+        }
+        let str = url.trim().replace(/\/+$/, '').replace(/\/api$/, '');
+        if (!str.startsWith('http://') && !str.startsWith('https://')) {
+          str = `https://${str}`;
+        }
+        if (str.startsWith('http://') && !str.includes('localhost')) {
+          str = str.replace(/^http:\/\//i, 'https://');
+        }
+        return str;
+      }
+
       const SOCKET_URL = import.meta.env.DEV
         ? undefined
-        : (import.meta.env.VITE_API_URL && !import.meta.env.VITE_API_URL.includes('vercel.app')
-            ? import.meta.env.VITE_API_URL.replace(/\/+$/, '').replace(/\/api$/, '')
-            : RAILWAY_SOCKET_URL);
+        : formatSocketUrl(import.meta.env.VITE_API_URL);
       socket = socketIO(SOCKET_URL, {
         path: '/socket.io',
         transports: ['websocket', 'polling'],
