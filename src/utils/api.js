@@ -17,6 +17,9 @@ function getApiBaseUrl() {
     }
   }
   if (!envUrl) return '/api';
+  if (envUrl.startsWith('http://') && !envUrl.includes('localhost')) {
+    envUrl = envUrl.replace(/^http:\/\//i, 'https://');
+  }
   const clean = envUrl.replace(/\/+$/, '');
   return clean.endsWith('/api') ? clean : `${clean}/api`;
 }
