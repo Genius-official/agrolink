@@ -4,7 +4,7 @@
  */
 
 // Default demo test key (can be overridden via environment variables or parameter)
-const DEFAULT_PAYSTACK_PUBLIC_KEY = import.meta.env?.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_agrolink_demo_key';
+const DEFAULT_PAYSTACK_PUBLIC_KEY = import.meta.env?.VITE_PAYSTACK_PUBLIC_KEY || 'pk_live_ffbcd91a5e2cf2f30bd1b88f85714d20813bebeb';
 
 /**
  * Dynamically load Paystack SDK script if not already present in DOM

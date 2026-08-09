@@ -9,7 +9,7 @@ async function dispatchEmail({ toEmail, subject, htmlContent }) {
   // 1. Check Native SMTP (Gmail / Custom SMTP)
   if (config.smtpHost && config.smtpUser && config.smtpPass) {
     try {
-      await sendSmtpEmail({
+      const smtpPromise = sendSmtpEmail({
         host: config.smtpHost,
         port: config.smtpPort || 465,
         user: config.smtpUser,
@@ -19,6 +19,12 @@ async function dispatchEmail({ toEmail, subject, htmlContent }) {
         subject,
         html: htmlContent,
       });
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('SMTP connection timeout (5s limit)')), 5000)
+      );
+
+      await Promise.race([smtpPromise, timeoutPromise]);
       console.log(`\n📧 [SMTP EMAIL SENT] Dispatched to ${toEmail}`);
       return true;
     } catch (smtpErr) {
