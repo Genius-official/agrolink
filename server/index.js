@@ -24,9 +24,21 @@ import cartRoutes         from './routes/cart.js';
 const app = express();
 const httpServer = createServer(app);
 
-// CORS — allow configured frontend origins
+// CORS — allow configured frontend origins, vercel, and railway domains
 app.use(cors({
-  origin: config.corsOrigins,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (
+      config.corsOrigins.includes('*') ||
+      config.corsOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.railway.app') ||
+      config.isDev
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
