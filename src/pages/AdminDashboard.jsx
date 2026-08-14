@@ -40,19 +40,11 @@ export default function AdminDashboard({
   // Which user row is expanded in "All Users" tab
   const [expandedUserEmail, setExpandedUserEmail] = useState(null);
 
-  // Helper to check if a user is an actual registered user vs demo seed data
+  // Helper to check if a user is a valid registered database user account
   const isRegisteredUser = (user) => {
     if (!user || !user.email) return false;
     const email = user.email.toLowerCase().trim();
-    const seedEmails = new Set([
-      'classicgenius@dev',
-      'james.asante@agrolink.gh',
-      'farmer.brent@agrolink.gh',
-      'kwame.farms@accra.gh',
-      'accra.fresh@market.gh',
-      'retail@buyers.gh'
-    ]);
-    if (seedEmails.has(email)) return false;
+    if (email === 'classicgenius@dev') return false;
     return true;
   };
 

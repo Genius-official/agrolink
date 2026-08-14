@@ -4,7 +4,7 @@
  */
 
 // Default demo test key (can be overridden via environment variables or parameter)
-const DEFAULT_PAYSTACK_PUBLIC_KEY = import.meta.env?.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_agrolink_demo_key';
+const DEFAULT_PAYSTACK_PUBLIC_KEY = import.meta.env?.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_415b9552b2faecd637853e1bd70a33e098f97aa6';
 
 /**
  * Dynamically load Paystack SDK script if not already present in DOM
@@ -59,11 +59,12 @@ export const processPaystackSubscription = async ({
     console.warn("Paystack script load error, falling back to simulated test mode", err);
   }
 
-  const activeKey = publicKey || DEFAULT_PAYSTACK_PUBLIC_KEY;
+  const activeKey = (publicKey || DEFAULT_PAYSTACK_PUBLIC_KEY || '').trim();
+  const isValidPaystackKeyFormat = /^pk_(test|live)_[a-f0-9]{20,64}$/i.test(activeKey);
   const amountInKobo = Math.round(parseFloat(amountGHS) * 100); // Paystack uses subunit (kobo / pesewas)
   const reference = `AGRO_${planName.toUpperCase()}_${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`;
 
-  if (window.PaystackPop) {
+  if (window.PaystackPop && isValidPaystackKeyFormat) {
     try {
       const handler = window.PaystackPop.setup({
         key: activeKey,
