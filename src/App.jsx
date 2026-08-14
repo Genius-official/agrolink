@@ -270,8 +270,13 @@ function App() {
             const validServerUsers = serverUsers.filter(u => u.email && !deletedEmails.has(u.email.toLowerCase().trim()))
             const serverEmails = new Set(validServerUsers.map(u => u.email.toLowerCase().trim()))
 
-            // Keep local-only users not on the server yet
+            // Keep local-only users not on the server yet & sync them to server DB
             const localOnly = prev.filter(u => u.email && !serverEmails.has(u.email.toLowerCase().trim()) && !deletedEmails.has(u.email.toLowerCase().trim()))
+            localOnly.forEach(lu => {
+              if (lu.email) {
+                api.patch(`/users/${lu.id || 'user-' + Date.now()}`, lu).catch(() => {})
+              }
+            })
 
             return [...validServerUsers, ...localOnly]
           })

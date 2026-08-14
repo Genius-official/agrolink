@@ -20,13 +20,13 @@ export default function AdminDashboard({
   onUpdateProduct,
   onDeleteProduct
 }) {
-  // Guard: only the developer admin should ever see this page
-  if (currentUser?.email !== ADMIN_EMAIL) {
+  // Guard: allow developer admin or any user with admin role to access this dashboard
+  if (currentUser?.role !== 'admin' && currentUser?.email !== ADMIN_EMAIL) {
     return (
       <div className="admin-dashboard-container fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '16px' }}>
         <Shield size={48} style={{ color: 'var(--danger, #ef4444)' }} />
         <h2 style={{ color: 'var(--danger, #ef4444)' }}>Access Denied</h2>
-        <p style={{ color: 'var(--text-muted)' }}>This panel is restricted to the platform developer only.</p>
+        <p style={{ color: 'var(--text-muted)' }}>This panel is restricted to system administrators only.</p>
         <button className="btn-approve" onClick={() => setActivePage?.('landing')}>← Return Home</button>
       </div>
     );
