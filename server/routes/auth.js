@@ -63,10 +63,13 @@ router.post('/register', async (req, res) => {
 
     await db.users.insert(newUser);
 
-    // Send welcome email (fire-and-forget — won't block registration response)
-    sendWelcomeEmail(normalizedEmail, name.trim(), safeRole).catch(err =>
-      console.warn('Welcome email failed (non-critical):', err.message)
-    );
+    // Send welcome email
+    try {
+      await sendWelcomeEmail(normalizedEmail, name.trim(), safeRole);
+      console.log(`\n📧 [WELCOME EMAIL DISPATCHED] Sent to ${normalizedEmail}`);
+    } catch (emailErr) {
+      console.warn('⚠️ Welcome email dispatch error:', emailErr.message);
+    }
 
     const token = signToken(newUser);
     return res.status(201).json({

@@ -9,11 +9,12 @@ async function dispatchEmail({ toEmail, subject, htmlContent }) {
   // 1. Check Native SMTP (Gmail / Custom SMTP)
   if (config.smtpHost && config.smtpUser && config.smtpPass) {
     try {
+      const cleanPass = config.smtpPass.replace(/\s+/g, '');
       await sendSmtpEmail({
         host: config.smtpHost,
         port: config.smtpPort || 465,
         user: config.smtpUser,
-        pass: config.smtpPass,
+        pass: cleanPass,
         from: config.emailFrom || config.smtpUser,
         to: toEmail,
         subject,
