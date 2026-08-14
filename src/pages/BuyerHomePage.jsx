@@ -31,6 +31,7 @@ export default function BuyerHomePage({
     const [activeTab, setActiveTab] = useState('All')
     const unreadCount = notifications.filter(n => n && !n.read).length
 
+    const firstName = currentUser?.name ? currentUser.name.split(' ')[0] : 'Buyer'
     const curEmail = (currentUser?.email || '').toLowerCase().trim()
     const userOrders = orders.filter(o => o && o.buyerEmail && o.buyerEmail.toLowerCase().trim() === curEmail)
 

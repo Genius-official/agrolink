@@ -137,14 +137,11 @@ router.post('/request-reset-code', async (req, res) => {
 
     resetCodes.set(normalizedEmail, { code, expiresAt });
 
-    // Dispatch real email via email service (fire-and-forget so user isn't blocked by SMTP delays)
-    sendPasswordResetEmail(normalizedEmail, code).catch(err =>
-      console.warn('Reset email dispatch failed (non-fatal):', err.message)
-    );
+    // Dispatch real email via email service
+    await sendPasswordResetEmail(normalizedEmail, code);
 
     return res.json({
       message: `A 6-digit security verification code has been sent to ${normalizedEmail}.`,
-      demoCode: code,
     });
   } catch (err) {
     console.error('Request code error:', err);

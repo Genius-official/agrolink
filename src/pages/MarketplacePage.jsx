@@ -6,6 +6,13 @@ import './MarketplacePage.css'
 const categories = ['All', 'Vegetables', 'Grains', 'Fruits', 'Machinery', 'Fertilizers']
 
 function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, currentUser, onOpenFarmerStore }) {
+    // Bulk Order form state (hooks must be at top before early returns)
+    const [showBulkForm, setShowBulkForm] = useState(false);
+    const [bulkQty, setBulkQty] = useState('');
+    const [bulkPrice, setBulkPrice] = useState('');
+    const [bulkComments, setBulkComments] = useState('');
+    const [bulkSuccess, setBulkSuccess] = useState(false);
+
     if (!product) return null
 
     // Look up seller in the localStorage user database
@@ -16,13 +23,6 @@ function ProductModal({ product, onClose, onAddToCart, onChat, onAddBulkOrder, c
     const isOrganic = seller?.organicCertified || false;
     const hasCustomTheme = seller?.shopTheme || false;
     const whatsappNum = seller?.whatsappNumber || '';
-
-    // Bulk Order form state
-    const [showBulkForm, setShowBulkForm] = useState(false);
-    const [bulkQty, setBulkQty] = useState('');
-    const [bulkPrice, setBulkPrice] = useState('');
-    const [bulkComments, setBulkComments] = useState('');
-    const [bulkSuccess, setBulkSuccess] = useState(false);
 
     const handleBulkSubmit = (e) => {
         e.preventDefault();
